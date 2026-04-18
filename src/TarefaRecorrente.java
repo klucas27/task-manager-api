@@ -16,5 +16,6 @@ public class TarefaRecorrente extends Tarefa {
     @Override
     public void completar() {
         super.status = "COMPLETA";
+        System.out.println("\nTarefa '" + this.titulo + "' foi marcada como completa");
     }
 }

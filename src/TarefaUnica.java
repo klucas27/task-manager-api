@@ -18,7 +18,7 @@ public class TarefaUnica extends Tarefa implements Agendavel, Notificavel {
     @Override
     public void completar() {
         super.status = "COMPLETA";
-        System.out.println("Tarefa '" + this.titulo + "' foi marcada como completa");
+        System.out.println("\nTarefa '" + this.titulo + "' foi marcada como completa");
 
     }
 
@@ -37,5 +37,10 @@ public class TarefaUnica extends Tarefa implements Agendavel, Notificavel {
     public void notificar(String msg) {
         System.out.println(msg);
 
+    }
+
+    @Override
+    public boolean ehAgendavel() {
+        return true;
     }
 }

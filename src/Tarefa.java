@@ -39,4 +39,8 @@ public abstract class Tarefa {
         return this.status;
     }
 
+    public boolean ehAgendavel() {
+        return false;
+    }
+
 }
