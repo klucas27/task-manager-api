@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.EmptyStackException;
+import java.util.List;
 
 public class GerenciadorTarefas {
 
@@ -15,6 +17,18 @@ public class GerenciadorTarefas {
     }
 
     // getters
+    public ArrayList<Tarefa> getTarefas(){
+        return tarefas;
+    }
+
+    public <T> T getLast(List<T> list){
+        if (list.isEmpty()){
+            throw new RuntimeException("List is empty");
+        }
+
+        return list.getLast();
+    }
+
     public void gerarRelatorio() {
 
         System.out.println("\n***** Relatorio *****");
