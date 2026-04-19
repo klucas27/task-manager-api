@@ -2,8 +2,8 @@ public class TarefaUnica extends Tarefa implements Agendavel, Notificavel {
 
     private String dataVencimento;
 
-    public TarefaUnica(String titulo, String status, String dataCriacao, String dataVencimento) {
-        super(titulo, status, dataCriacao);
+    public TarefaUnica(String id, String titulo, String status, String dataCriacao, String dataVencimento) {
+        super(id, titulo, status, dataCriacao);
         this.dataVencimento = dataVencimento;
 
     }
@@ -42,5 +42,11 @@ public class TarefaUnica extends Tarefa implements Agendavel, Notificavel {
     @Override
     public boolean ehAgendavel() {
         return true;
+
+    }
+
+    @Override
+    public String getId() {
+        return super.getId();
     }
 }

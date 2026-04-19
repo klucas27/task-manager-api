@@ -1,8 +1,8 @@
 public class TarefaRecorrente extends Tarefa {
     private String frequencia;
 
-    public TarefaRecorrente(String titulo, String status, String dataCriacao, String frequencia) {
-        super(titulo, status, dataCriacao);
+    public TarefaRecorrente(String id, String titulo, String status, String dataCriacao, String frequencia) {
+        super(id, titulo, status, dataCriacao);
         this.frequencia = frequencia;
     }
 
@@ -17,5 +17,10 @@ public class TarefaRecorrente extends Tarefa {
     public void completar() {
         super.status = "COMPLETA";
         System.out.println("\nTarefa '" + this.titulo + "' foi marcada como completa");
+    }
+
+    @Override
+    public String getId() {
+        return super.getId();
     }
 }

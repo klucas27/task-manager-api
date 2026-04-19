@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.EmptyStackException;
-import java.util.List;
+import java.util.*;
 
 public class GerenciadorTarefas {
 
@@ -11,18 +9,46 @@ public class GerenciadorTarefas {
         this.proprietario = proprietario;
     }
 
+    // getters private
+
+    private int countId(String id) {
+        int totalId = 0;
+        for (Tarefa t : tarefas) {
+            if (t.getId().equals(id)) {
+                totalId++;
+            }
+        }
+        return totalId;
+    }
+
     // Setters
     public void adicionar(Tarefa t) {
         this.tarefas.add(t);
     }
 
+    public Map<String, Tarefa> buildTaskMap(List<Tarefa> tarefa) {
+        /* Fazer verificação */
+        Map<String, Tarefa> tarefaMap = new HashMap<>();
+
+        for (Tarefa t : tarefas) {
+            if ((countId(t.getId()) > 1)) {
+                throw new IllegalStateException("Erro, 2 Ids Iguais!");
+            }
+            tarefaMap.put(t.getId(), t);
+
+        }
+
+        return tarefaMap;
+
+    }
+
     // getters
-    public ArrayList<Tarefa> getTarefas(){
+    public ArrayList<Tarefa> getTarefas() {
         return tarefas;
     }
 
-    public <T> T getLast(List<T> list){
-        if (list.isEmpty()){
+    public <T> T getLast(List<T> list) {
+        if (list.isEmpty()) {
             throw new RuntimeException("List is empty");
         }
 
@@ -81,6 +107,7 @@ public class GerenciadorTarefas {
 
     public void imprimirRelatorioDetalhado() {
         System.out.println("\n***** Relátorio Detalhado ******");
+
         System.out.println("Usuario: " + proprietario.getNome());
 
         System.out.println("Email: " + proprietario.getEmail());
@@ -88,7 +115,6 @@ public class GerenciadorTarefas {
         for (Tarefa t : this.tarefas) {
             t.exibir();
         }
-
 
     }
 
