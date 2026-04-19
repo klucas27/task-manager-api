@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.function.Predicate;
 
 public class GerenciadorTarefas {
 
@@ -9,38 +10,36 @@ public class GerenciadorTarefas {
         this.proprietario = proprietario;
     }
 
-    // getters private
-
-    private int countId(String id) {
-        int totalId = 0;
-        for (Tarefa t : tarefas) {
-            if (t.getId().equals(id)) {
-                totalId++;
-            }
-        }
-        return totalId;
-    }
-
     // Setters
     public void adicionar(Tarefa t) {
         this.tarefas.add(t);
     }
 
     public Map<String, Tarefa> buildTaskMap(List<Tarefa> tarefa) {
-        /* Fazer verificação */
         Map<String, Tarefa> tarefaMap = new HashMap<>();
 
-        for (Tarefa t : tarefas) {
-            if ((countId(t.getId()) > 1)) {
-                throw new IllegalStateException("Erro, 2 Ids Iguais!");
+        for (Tarefa t : tarefa) {
+            if (tarefaMap.containsKey(t.getId())) {
+                throw new IllegalStateException("Erro, 2 Ids Iguais! id: " + t.getId());
             }
             tarefaMap.put(t.getId(), t);
-
         }
-
+        System.out.println(tarefaMap);
         return tarefaMap;
-
     }
+
+    // lambdas
+    private List<Tarefa> filtrarTarefas(List<Tarefa> lista, Predicate<Tarefa> condicao) {
+        List<Tarefa> resultado = new ArrayList<>();
+
+        for (Tarefa item : lista) {
+            if (condicao.test(item)) {
+                resultado.add(item);
+            }
+        }
+        return resultado;
+    }
+
 
     // getters
     public ArrayList<Tarefa> getTarefas() {
@@ -72,37 +71,15 @@ public class GerenciadorTarefas {
     }
 
     public int contarPendentes() {
-
-        int ctt = 0;
-        for (Tarefa t : this.tarefas) {
-            if (t.getStatus().equals("PENDENTE")) {
-                ctt++;
-            }
-        }
-        return ctt;
+        return filtrarTarefas(this.tarefas, tarefa -> tarefa.getStatus().equals("PENDENTE")).size();
     }
 
-    public ArrayList<Tarefa> listarPorStatus(String status) {
-        ArrayList<Tarefa> tarefasStatus = new ArrayList<>();
-
-        for (Tarefa t : this.tarefas) {
-            if (t.getStatus().equals(status)) {
-                tarefasStatus.add(t);
-            }
-        }
-        return tarefasStatus;
-
+    public List<Tarefa> listarPorStatus(String status) {
+        return filtrarTarefas(this.tarefas, tarefa -> tarefa.getStatus().equals(status));
     }
 
-    public ArrayList<Tarefa> obterAgendaveis() {
-        ArrayList<Tarefa> tarefasAgendaveis = new ArrayList<>();
-        for (Tarefa t : this.tarefas) {
-            if (t.ehAgendavel()) {
-                tarefasAgendaveis.add(t);
-            }
-        }
-
-        return tarefasAgendaveis;
+    public List<Tarefa> obterAgendaveis() {
+        return filtrarTarefas(this.tarefas, tarefa -> tarefa.ehAgendavel());
     }
 
     public void imprimirRelatorioDetalhado() {
