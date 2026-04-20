@@ -47,6 +47,9 @@ public abstract class Tarefa {
     public String getId() {
         return this.id;
     }
+    public String getTitulo() {
+        return this.titulo;
+    }
 
 
 }

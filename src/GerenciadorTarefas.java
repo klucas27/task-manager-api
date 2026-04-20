@@ -1,5 +1,9 @@
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
 
 public class GerenciadorTarefas {
 
@@ -42,6 +46,25 @@ public class GerenciadorTarefas {
 
 
     // getters
+    public Optional<Tarefa> buscarId(String id){
+        return this.tarefas.stream().filter(t -> t.getId().equals(id)).findFirst();
+    }
+
+    public List<String> titulosPendentesOrdenados() {
+        return this.tarefas.stream().filter(t -> t.getStatus().equals("PENDENTE")).map(Tarefa::getTitulo).sorted().toList();
+    }
+
+    public Tarefa buscarPrimeiraPorStatus(String status) {
+        return this.tarefas.stream().
+                filter(t -> t.getStatus().equals(status)).
+                findFirst().
+                orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+    }
+
+    public Map<String, Long> contarPorStatus(){
+        return this.tarefas.stream().collect(groupingBy(Tarefa::getStatus, Collectors.counting()));
+    }
+
     public ArrayList<Tarefa> getTarefas() {
         return tarefas;
     }
